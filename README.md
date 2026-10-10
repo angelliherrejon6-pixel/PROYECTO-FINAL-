@@ -3,11 +3,15 @@
 
 Este proyecto es una aplicación de backend desarrollada en Spring Boot para la gestión de un servicio de música, estructurando mediante catálogos organizados por géneros musicalesprincipales (por ejemplo; Electrónica, Rock, Jazz). Para ello utilizaremos el patrón Decorator, el cual permite añadir responsabilidades y características adicionales d emanera dinámica sobre cualquier género musical base sin alterar su estructura central, logrando una alta flexibilidad y extensibilidad en las regla de negocio del sistema.
 
-==Lista de Integrantes del equipo== Flores Carmona Iker Jair Morgado Ferreyra Dana Victoria Pérez Herrejón Angeli Nicole
+==Lista de Integrantes del equipo== 
+Flores Carmona Iker Jair
+Morgado Ferreyra Dana Victoria 
+Pérez Herrejón Angeli Nicole
 
 ==Tabla de requerimientos== REQUERIMIENTOS
 
-REQUIRIMIENTO DESCRIPCIÓN REQ_1 La aplicación permite crear un - nuevo usuario con correo y contraseña - seguros.
+REQUIRIMIENTO DESCRIPCIÓN 
+REQ_1 La aplicación permite crear un - nuevo usuario con correo y contraseña - seguros.
 
 REQ_2 La aplicación permite iniciar sesión - mediante credenciales válidas (correo - y contraseña).
 
