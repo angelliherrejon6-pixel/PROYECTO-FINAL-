@@ -1,0 +1,21 @@
+{
+  "name": "Java",
+  "image": "mcr.microsoft.com/devcontainers/java:3-25-trixie",
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "none",
+      "installMaven": "true",
+      "installGradle": "false"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vmware.vscode-spring-boot",
+        "MermaidChart.vscode-mermaid-chart",
+        "vscjava.vscode-maven",
+        "vscjava.vscode-spring-initializr"
+      ]
+    }
+  }
+}
