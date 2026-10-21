@@ -27,5 +27,10 @@ Se creó el usuario "docky" y la base de datos "music", esta información esta c
 
 /workspaces/PROYECTO-FINAL-/demo/demo/src/main/resources/application.properties
 
-
+En:
+/workspaces/PROYECTO-FINAL-/demo/demo/src/main/java/com/example
+    -Creada la carpeta model, con el archivo Cancion.java
+    -Creada la carpeta repo, con el archivo CancionRepository.java
+    -Creada la carpeta Cancion, con el archivo CancionControler.java
+Es necesario revisar la clase Canción y el diseño de la base de datos, de momento es solo un ejemplo.
 
