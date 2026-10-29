@@ -1,11 +1,14 @@
 {
-  "name": "Java",
-  "image": "mcr.microsoft.com/devcontainers/java:3-25-trixie",
+  "name": "proyecto-final-dev",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "features": {
+    "ghcr.io/nlstn/devcontainer-features/psql:1": {},
     "ghcr.io/devcontainers/features/java:1": {
       "version": "none",
-      "installMaven": "true",
-      "installGradle": "false"
+      "installMaven": true,
+      "installGradle": false
     }
   },
   "customizations": {
@@ -14,6 +17,7 @@
         "vmware.vscode-spring-boot",
         "MermaidChart.vscode-mermaid-chart",
         "vscjava.vscode-maven",
+        "cweijan.dbclient-jdbc",
         "vscjava.vscode-spring-initializr"
       ]
     }
