@@ -1,31 +1,44 @@
 package aspirest.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "listas_reproduccion")
 public class ListaReproduccion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
-    private String nombreUsuario;
     private Integer duracionMinutos;
     private String URL;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+
+    @OneToMany(mappedBy = "listaReproduccion", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("lista-medios")
+    private List<ListaReproduccionMedio> medios = new ArrayList<>();
+
     public ListaReproduccion() { }
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+    
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
-    public String getNombreUsuario() { return nombreUsuario; }
-    public void setNombreUsuario(String nombreUsuario) { this.nombreUsuario = nombreUsuario; }
+    
     public Integer getDuracionMinutos() { return duracionMinutos; }
     public void setDuracionMinutos(Integer duracionMinutos) { this.duracionMinutos = duracionMinutos; }
+    
     public String getURL() { return URL; }
     public void setURL(String URL) { this.URL = URL; }
+    
+    public Usuario getUsuario() { return usuario; }
+    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
+    
+    public List<ListaReproduccionMedio> getMedios() { return medios; }
+    public void setMedios(List<ListaReproduccionMedio> medios) { this.medios = medios; }
 }
