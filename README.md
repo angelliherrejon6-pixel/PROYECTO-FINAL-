@@ -31,30 +31,23 @@ REQ_5 La aplicación permite al usuario _ crear, actualizar, editar y eliminar _
 
 *Logs (Spring Boot Actuator y Logback) Monitorear el estado de salud fr la aplicación y resgistrar logs de actividad o errores del servidor.
 
-#MODELO DE DATOS Y RELACIONES (FASE4)
- 
-    Relaciones 1 a muchos identificadas 
-      Relacion                                                    
-1      Un usuario tiene muchas listas de reproduccion. 
-      -||---------------------------------------------------|<-
-      USUARIO                                    ListaReproduccion 
-LADO UNO        LADO "muchos"       FK                   Obligatoria
-Usuario           ListaReproduccion   lista_reproduccion.   Si/Fuerte
-                                      usario_id
+## Modelo de datos y relaciones (Fase 4)
 
-2  Una lista contiene muchas entradas de lista 
---||---------------------------------------------------------|<--
-ListaReproduccion                              ListaReproduccionMedio
- LADO UNO         LADO "muchos"        FK                  Obligatoria 
-ListaReproduccion  ListaReproduccion   Lista_reproduccion_   Si/Fuerte
-                    Medio              medio.lista_id
+### 1. Relaciones 1 a muchos identificadas
 
-3 Un medio aparece en muchas entradas de lista 
-----||-------------------------------------------------------|<---
-Medio                                          ListaReproduccionMedio
-LADO UNO      LADO "muchos"         FK                 Obligatoria 
-Medio       ListaReproduccionMedio   lista_reproduccion_   Sí/Fuerte
-                                    medio.lista_id
+| # | Relación | Lado "uno" | Lado "muchos" | Llave foránea | Obligatoria |
+|---|----------|------------|---------------|---------------|-------------|
+| 1 | Un usuario tiene muchas listas de reproducción | `Usuario` | `ListaReproduccion` | `lista_reproduccion.usuario_id` | Sí |
+| 2 | Una lista contiene muchas entradas de lista | `ListaReproduccion` | `ListaReproduccionMedio` | `lista_reproduccion_medio.lista_id` | Sí |
+| 3 | Un medio aparece en muchas entradas de lista | `Medio` | `ListaReproduccionMedio` | `lista_reproduccion_medio.medio_id` | Sí |
+
+Una lista puede tener muchos medios y un medio puede estar en muchas listas (relación muchos a muchos). Para modelarla solo con relaciones 1 a muchos se usa la entidad intermedia `ListaReproduccionMedio`, que además guarda la `posicion` del medio dentro de la lista y la `fechaAgregado`. Una restricción única sobre `(lista_id, medio_id)` evita repetir el mismo medio en una lista.
+
+Relaciones que también existen en el dominio, pero que hoy están guardadas como texto dentro de `Medio` (`artista`, `album` y `genero`). Quedan pendientes hasta que existan sus entidades propias:
+
+- Un `Artista` tiene muchos `Album`.
+- Un `Album` tiene muchos `Medio`.
+- Un `Genero` tiene muchos `Medio`.
 
 Una lista puede terne rmuchos medios y un medio puede estar en muchas listas (relación muchos a mucos). Para modelarla solo con relaciones 1 a muchos se usa la entidad intermedia ListaReproduccionMedio, que ademas guarda la posicion del medio dentro de la lista y la fechaAgregado. Una restricción única sobre (lista_id, medio_id) evita reperir el mismo medio en una lista. 
 
