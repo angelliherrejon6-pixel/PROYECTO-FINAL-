@@ -1,5 +1,6 @@
 package aspirest.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class ListaReproduccion {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "usuario_id")
+    @JsonIgnoreProperties({"listas", "hibernateLazyInitializer", "handler"})
     private Usuario usuario;
 
     @OneToMany(mappedBy = "listaReproduccion", cascade = CascadeType.ALL, orphanRemoval = true)
