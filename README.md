@@ -147,11 +147,3 @@ classDiagram
 ```
 
 Las dos primeras relaciones se dibujan como composición (rombo relleno) porque se configuró `cascade = ALL` y `orphanRemoval = true`: al eliminar un usuario se eliminan sus listas, y al eliminar una lista se eliminan sus entradas, pero nunca los `Medio`, que siguen existiendo en el catálogo.
-
-### 4. Cómo quedó en el código
-
-- **Lado "uno":** `@OneToMany(mappedBy = "...", cascade = CascadeType.ALL, orphanRemoval = true)` sobre una `List` inicializada vacía (`Usuario.listas` y `ListaReproduccion.medios`).
-- **Lado "muchos":** `@ManyToOne(optional = false)` con `@JoinColumn(name = "...")`, que define la llave foránea (`usuario_id`, `lista_id` y `medio_id`).
-- **Serialización JSON:** `@JsonManagedReference` y `@JsonBackReference("lista-medios")` en la relación lista-entradas, y `@JsonIgnoreProperties` en `ListaReproduccion.usuario`, para no generar un ciclo infinito.
-- **Contraseña:** `Usuario.contraseña` es de solo escritura (`WRITE_ONLY`), así que se acepta al crear el usuario pero nunca se devuelve en las respuestas.
-- `ListaReproduccion` ya no guarda el nombre del usuario como texto: lo reemplaza la relación con `Usuario`.
