@@ -30,3 +30,8 @@ REQ_5 La aplicación permite al usuario _ crear, actualizar, editar y eliminar _
 *Servicios (API REST, Spring Web) Permitir la comunicación entre el backend y los clientes (búsquedas de canciones, creación de playlists, etc).
 
 *Logs (Spring Boot Actuator y Logback) Monitorear el estado de salud fr la aplicación y resgistrar logs de actividad o errores del servidor.
+
+**Modelo de datos y relaciones (FASE4)
+ 
+    ==Relaciones 1 a muchos identificadas 
+    
