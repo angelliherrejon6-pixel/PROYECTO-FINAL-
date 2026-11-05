@@ -31,28 +31,28 @@ REQ_5 La aplicación permite al usuario _ crear, actualizar, editar y eliminar _
 
 *Logs (Spring Boot Actuator y Logback) Monitorear el estado de salud fr la aplicación y resgistrar logs de actividad o errores del servidor.
 
-**MODELO DE DATOS Y RELACIONES (FASE4)
+#MODELO DE DATOS Y RELACIONES (FASE4)
  
     Relaciones 1 a muchos identificadas 
-#       Relacion                                                    
+      Relacion                                                    
 1      Un usuario tiene muchas listas de reproduccion. 
       -||---------------------------------------------------|<-
-      USUARIO                                    ListaReproduccion
-#  LADO UNO        LADO "muchos"       FK                   Obligatoria
-Usuario           ListaReproduccion   lista_reproduccion_   Si/Fuerte
+      USUARIO                                    ListaReproduccion 
+LADO UNO        LADO "muchos"       FK                   Obligatoria
+Usuario           ListaReproduccion   lista_reproduccion.   Si/Fuerte
                                       usario_id
 
 2  Una lista contiene muchas entradas de lista 
 --||---------------------------------------------------------|<--
 ListaReproduccion                              ListaReproduccionMedio
-# LADO UNO         LADO "muchos"        FK                  Obligatoria 
+ LADO UNO         LADO "muchos"        FK                  Obligatoria 
 ListaReproduccion  ListaReproduccion   Lista_reproduccion_   Si/Fuerte
                     Medio              medio.lista_id
 
 3 Un medio aparece en muchas entradas de lista 
 ----||-------------------------------------------------------|<---
 Medio                                          ListaReproduccionMedio
-# LADO UNO      LADO "muchos"         FK                 Obligatoria 
+LADO UNO      LADO "muchos"         FK                 Obligatoria 
 Medio       ListaReproduccionMedio   lista_reproduccion_   Sí/Fuerte
                                     medio.lista_id
 
