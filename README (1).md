@@ -8,27 +8,12 @@ Este proyecto es una aplicación de backend desarrollada en **Spring Boot** que 
 
 El catálogo se organiza por géneros musicales principales (por ejemplo, Electrónica, Rock y Jazz). Para extenderlo se aplicará el patrón de diseño **Decorator**, que permite añadir responsabilidades y características adicionales a un género base de forma dinámica, sin alterar su estructura central. Con esto se busca que las reglas de negocio del sistema sean flexibles y fáciles de ampliar.
 
-> **Estado actual:** el proyecto cuenta con el modelo de datos, las relaciones entre entidades y el CRUD de usuarios, listas de reproducción y medios. La autenticación, las búsquedas avanzadas, el patrón Decorator y el monitoreo con Actuator están pendientes (ver [Requerimientos](#requerimientos) y [Próximos pasos](#próximos-pasos)).
-
 ## Integrantes del equipo
 
 - Flores Carmona Iker Jair
 - Morgado Ferreyra Dana Victoria
 - Pérez Herrejón Angeli Nicole
 
-## Tecnologías
-
-| Tecnología | Uso en el proyecto |
-|------------|--------------------|
-| Java 25 | Lenguaje de programación |
-| Spring Boot 4.2.0 (snapshot) | Framework base de la aplicación |
-| Spring Web MVC | API REST y controladores |
-| Spring Data JPA (Hibernate) | Persistencia y repositorios |
-| PostgreSQL | Base de datos relacional |
-| Maven (wrapper `mvnw`) | Construcción y dependencias |
-| Lombok | Dependencia incluida en el proyecto |
-| Dev Container | Entorno de desarrollo reproducible |
-| Mermaid | Diagramas de la documentación |
 
 ## Requerimientos
 
@@ -79,64 +64,7 @@ aspirest/
         └── application.properties
 ```
 
-## Endpoints disponibles
 
-| Recurso | Métodos y rutas | Descripción |
-|---------|-----------------|-------------|
-| Prueba | `GET /hello` | Comprueba que la aplicación responde. |
-| Usuarios | `GET` y `POST /api/usuarios` | Lista usuarios (con sus listas) y crea uno nuevo. |
-| | `GET`, `PUT` y `DELETE /api/usuarios/{id}` | Consulta, actualiza o elimina un usuario. |
-| Listas de reproducción | `GET` y `POST /api/listas` | Lista las listas y crea una nueva (requiere indicar su usuario). |
-| | `GET`, `PUT` y `DELETE /api/listas/{id}` | Consulta, actualiza o elimina una lista. |
-| Medios | `GET` y `POST /api/medios` | Lista el catálogo y agrega un medio. |
-| | `GET`, `PUT` y `DELETE /api/medios/{id}` | Consulta, actualiza o elimina un medio. |
-
-## Cómo ejecutar el proyecto
-
-**Requisitos:** Java 25 (incluido en el Dev Container) y una base de datos PostgreSQL.
-
-1. **Crear la base de datos.** La aplicación se conecta a `db:5432` con la base, el usuario y la contraseña `musica` (configurados en `aspirest/src/main/resources/application.properties`). En PostgreSQL ejecuta:
-
-   ```sql
-   CREATE USER musica WITH PASSWORD 'musica';
-   CREATE DATABASE musica OWNER musica;
-   ```
-
-   Si tu PostgreSQL está en otro equipo, cambia `db` por su dirección en `spring.datasource.url`.
-
-2. **Iniciar la aplicación:**
-
-   ```bash
-   cd aspirest
-   ./mvnw spring-boot:run
-   ```
-
-3. **Probar la API** (la aplicación escucha en el puerto `8080`):
-
-   ```bash
-   # Crear un usuario
-   curl -X POST http://localhost:8080/api/usuarios -H "Content-Type: application/json" \
-     -d '{"nombre":"Angeli","fechaNacimiento":"2000-05-04","contraseña":"1234"}'
-
-   # Crear una lista de reproducción para el usuario 1
-   curl -X POST http://localhost:8080/api/listas -H "Content-Type: application/json" \
-     -d '{"nombre":"Favoritas","duracionMinutos":45,"usuario":{"id":1}}'
-
-   # Consultar los usuarios con sus listas
-   curl http://localhost:8080/api/usuarios
-   ```
-
-> **Nota:** el Dev Container del repositorio todavía no incluye el servicio de PostgreSQL, por lo que la base de datos debe estar disponible por separado.
-
-## Próximos pasos
-
-1. Agregar Spring Security: inicio de sesión (REQ_2), campo `correo` y contraseñas cifradas (REQ_1).
-2. Implementar las búsquedas avanzadas por género, canción, artista y álbum (REQ_4).
-3. Crear las entidades `Artista`, `Album` y `Genero`, hoy guardadas como texto dentro de `Medio`.
-4. Aplicar el patrón Decorator al catálogo de géneros musicales.
-5. Agregar Spring Boot Actuator y configurar los registros (logs) de la aplicación.
-6. Agregar endpoints para añadir y quitar medios de una lista existente (REQ_5) y para descargar listas (REQ_3).
-7. Incluir PostgreSQL en el Dev Container para que cualquier integrante pueda ejecutar el proyecto sin configuración manual.
 
 ## Modelo de datos y relaciones (Fase 4)
 
