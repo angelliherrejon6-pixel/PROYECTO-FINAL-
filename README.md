@@ -1,37 +1,48 @@
 # PROYECTO-FINAL-
-==DESCRIPCIÓN GENERAL DEL PROYECTO==
+Servicio de música
+Proyecto final de Implementación de Sistemas: API REST desarrollada con Spring Boot para gestionar usuarios, sus listas de reproducción y el catálogo de medios (canciones) de un servicio de música.
 
-Este proyecto es una aplicación de backend desarrollada en Spring Boot para la gestión de un servicio de música, estructurando mediante catálogos organizados por géneros musicalesprincipales (por ejemplo; Electrónica, Rock, Jazz). Para ello utilizaremos el patrón Decorator, el cual permite añadir responsabilidades y características adicionales d emanera dinámica sobre cualquier género musical base sin alterar su estructura central, logrando una alta flexibilidad y extensibilidad en las regla de negocio del sistema.
+Descripción general
+
+Este proyecto es una aplicación de backend desarrollada en Spring Boot que expone una API REST para administrar los usuarios de un servicio de música, sus listas de reproducción y el catálogo de medios. Los datos se almacenan en PostgreSQL mediante Spring Data JPA.
+
+El catálogo se organiza por géneros musicales principales (por ejemplo, Electrónica, Rock y Jazz). Para extenderlo se aplicará el patrón de diseño Decorator, que permite añadir responsabilidades y características adicionales a un género base de forma dinámica, sin alterar su estructura central. Con esto se busca que las reglas de negocio del sistema sean flexibles y fáciles de ampliar.
+
+Estado actual: el proyecto cuenta con el modelo de datos, las relaciones entre entidades y el CRUD de usuarios, listas de reproducción y medios. La autenticación, las búsquedas avanzadas, el patrón Decorator y el monitoreo con Actuator están pendientes.
 
 ==Lista de Integrantes del equipo== 
 Flores Carmona Iker Jair
 Morgado Ferreyra Dana Victoria 
 Pérez Herrejón Angeli Nicole
 
-==Tabla de requerimientos== REQUERIMIENTOS
+==Tabla de requerimientos== 
 
 REQUIRIMIENTO DESCRIPCIÓN 
-REQ_1 La aplicación permite crear un - nuevo usuario con correo y contraseña - seguros.
+Requerimiento	Descripción	Estado	Notas
+REQ_1	La aplicación permite registrar un nuevo usuario con correo y contraseña seguros.	🟡 Parcial	POST /api/usuarios crea usuarios y la contraseña nunca se devuelve en las respuestas. Falta el campo correo y cifrar la contraseña, que hoy se guarda sin cifrar.
+REQ_2	La aplicación permite iniciar sesión mediante credenciales válidas (correo y contraseña).	⏳ Pendiente	Requiere agregar Spring Security.
+REQ_3	La aplicación permite consultar y descargar las listas de reproducción creadas por el usuario.	🟡 Parcial	Se consultan con GET /api/listas y GET /api/usuarios/{id}, que incluye las listas del usuario. Falta la descarga y filtrar por el usuario con sesión iniciada (depende de REQ_2).
+REQ_4	La aplicación permite realizar búsquedas avanzadas de géneros, nombres de canciones, artistas y álbumes.	⏳ Pendiente	Hoy solo hay listados y consulta por identificador. Artista, álbum y género son texto dentro de Medio.
+REQ_5	La aplicación permite al usuario crear, consultar, actualizar y eliminar sus listas de reproducción personalizadas.	🟡 Parcial	El CRUD de listas está en /api/listas. Falta agregar y quitar medios de una lista ya creada, porque la actualización no modifica su contenido.
 
-REQ_2 La aplicación permite iniciar sesión - mediante credenciales válidas (correo - y contraseña).
 
-REQ_3 La aplicación permite descargar y - consultar playlist creadas por el - usuario.
+#== Lista de Funcionalidades==
 
-REQ_4 La aplicación permite realizar - búsquedas avanzadas de géneros, _ nombres de canciones, artistas y _ álbumes.
+Funcionalidad	Tecnología	Descripción	Estado
+Gestión de la base de datos	Spring Data JPA y PostgreSQL	Almacena y consulta usuarios, listas de reproducción y medios. El esquema se genera a partir de las entidades (ddl-auto=update).	✅ Implementada
+Relaciones entre entidades	JPA (@OneToMany y @ManyToOne)	Un usuario tiene muchas listas, y cada lista contiene medios mediante la entidad intermedia ListaReproduccionMedio. Se documentan en Modelo de datos y relaciones.	✅ Implementada
+Servicios REST	Spring Web	CRUD completo de usuarios, listas de reproducción y medios, con respuestas en JSON.	✅ Implementada
+Seguridad y autenticación	Spring Security	Proteger el acceso, cifrar las contraseñas y permitir el inicio de sesión.	⏳ Pendiente
+Búsquedas avanzadas	Spring Data JPA	Buscar por género, nombre de canción, artista y álbum.	⏳ Pendiente
+Catálogo por géneros con Decorator	Patrón de diseño	Añadir características a un género base sin modificar su estructura.	⏳ Pendiente
+Monitoreo y logs	Spring Boot Actuator y Logback	Consultar el estado de salud de la aplicación y registrar actividad y errores. Logback ya viene incluido en Spring Boot y escribe en consola; falta agregar Actuator.	⏳ Pendiente
 
-REQ_5 La aplicación permite al usuario _ crear, actualizar, editar y eliminar _ sus playlists personalizadas.
-
-== Lista de Funcionalidades==
-
-*Gestion de Base de Datos (Spring Data JPA junto con PostgreSQL) Almacenar y consultar los datos de los usarios, canciones, artistas, álbumes y playlist.
-
-*Seguridad y Autentificación de Usuarios (Spring Security) Proteger los accesos, cifrar contraseñas de registro e inico de sesión.
-
-*Servicios (API REST, Spring Web) Permitir la comunicación entre el backend y los clientes (búsquedas de canciones, creación de playlists, etc).
-
-*Logs (Spring Boot Actuator y Logback) Monitorear el estado de salud fr la aplicación y resgistrar logs de actividad o errores del servidor.
-
-## Modelo de datos y relaciones (Fase 4)
+Avance del proyecto
+Fase	Contenido	Estado
+Fase 1	Entorno de desarrollo (Dev Container), proyecto base con Spring Initializr y primer controlador de prueba (/hello).	✅ Completada
+Fase 2	Persistencia con Spring Data JPA y PostgreSQL (laboratorio de Spring JPA).	✅ Completada
+Fase 3	Modelos Usuario, ListaReproduccion y Medio, con sus repositorios y controladores CRUD.	✅ Completada
+Fase 4	Relaciones 1 a muchos, colecciones anidadas, corrección del ciclo infinito en JSON y documentación con diagramas Mermaid.	✅ Completada
 
 ### 1. Relaciones 1 a muchos identificadas
 
