@@ -12,12 +12,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ContentDisposition;  
 import org.springframework.http.HttpHeaders;         
 import org.springframework.http.HttpStatus;
-import aspirest.repo.ListaReproduccionRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import java.nio.charset.StandardCharsets;  
 import java.time.LocalDate;                
@@ -27,6 +27,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/listas")
+@Tag(name = "Listas de reproducción", description = "CRUD de listas del usuario")
 public class ListaReproduccionController {
 
     private final ListaReproduccionRepository listaReproduccionRepository;
