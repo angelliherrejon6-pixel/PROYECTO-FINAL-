@@ -7,14 +7,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/medios")
+@Tag(name = "Medios", description = "Catálogo de canciones")
 public class MedioController {
     @Autowired private MedioRepository medioRepository;
 
+    @Operation(summary = "Listar todos los medios")
     @GetMapping
     public List<Medio> listar() { return medioRepository.findAll(); }
 
+    @Operation(summary = "Obtener un medio por su id")
+    @ApiResponse(responseCode = "404", description = "Medio no encontrado", content = @io.swagger.v3.oas.annotations.media.Content)
     @GetMapping("/{id}")
     public ResponseEntity<Medio> obtenerPorId(@PathVariable Long id) {
         return medioRepository.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
@@ -36,6 +44,7 @@ public class MedioController {
         }).orElse(ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Eliminar un medio")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         if (medioRepository.existsById(id)) {
