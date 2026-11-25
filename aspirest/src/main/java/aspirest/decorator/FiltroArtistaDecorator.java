@@ -14,8 +14,8 @@ public class FiltroArtistaDecorator extends CatalogoDecorator {
 
     @Override
     public List<Medio> getMedios() {
-        return catalogo.getMedios().stream()
-                .filter(medio -> medio.getArtista().equalsIgnoreCase(artista))
+        return super.getMedios().stream()
+                .filter(medio -> artista.equalsIgnoreCase(medio.getArtista()))
                 .toList();
     }
 
