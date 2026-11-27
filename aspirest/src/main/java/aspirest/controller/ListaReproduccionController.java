@@ -137,10 +137,10 @@ public class ListaReproduccionController {
     }
 
 
-    @Operation(summary = "Agregar un medio a mi lista", description = "Se agrega al final. No permite repetir el mismo medio.")
+@Operation(summary = "Agregar un medio a mi lista", description = "Se agrega al final. No permite repetir el mismo medio.")
     @PostMapping("/{id}/medios/{medioId}")
-    public ListaReproduccion agregarMedio(@AuthenticationPrincipal Jwt jwt,
-                                          @PathVariable Long id, @PathVariable Long medioId) {
+    public ResponseEntity<ListaReproduccion> agregarMedio(@AuthenticationPrincipal Jwt jwt,
+                                                          @PathVariable Long id, @PathVariable Long medioId) {
         ListaReproduccion lista = propia(id, jwt);
         Medio medio = medioRepository.findById(medioId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "El medio no existe"));
@@ -153,7 +153,7 @@ public class ListaReproduccionController {
         entrada.setPosicion(lista.getMedios().size() + 1);
         entrada.setFechaAgregado(LocalDate.now());
         lista.getMedios().add(entrada);
-        return listaReproduccionRepository.save(lista);
+          return ResponseEntity.status(HttpStatus.CREATED).body(listaReproduccionRepository.save(lista));
     }
 
 
@@ -162,7 +162,7 @@ public class ListaReproduccionController {
     public ListaReproduccion quitarMedio(@AuthenticationPrincipal Jwt jwt,
                                          @PathVariable Long id, @PathVariable Long medioId) {
         ListaReproduccion lista = propia(id, jwt);
-        boolean quitado = lista.getMedios().removeIf(e -> e.getMedio().getId().equals(medioId)); // orphanRemoval lo borra
+        boolean quitado = lista.getMedios().removeIf(e -> e.getMedio().getId().equals(medioId)); 
         if (!quitado) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El medio no está en la lista");
         }

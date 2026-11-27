@@ -29,15 +29,22 @@ public class SecurityConfig {
     private String secret;
 
     @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain filterChain(HttpSecurity http, RestSecurityHandlers handlers) throws Exception {
         http.csrf(csrf -> csrf.disable())
             .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(a -> a
-                .requestMatchers("/api/auth/**", "/hello",
-                                 "/actuator/health", "/actuator/health/**", 
+                .requestMatchers("/error",
+                                 "/api/auth/**", "/hello",
+                                 "/actuator/health", "/actuator/health/**",
                                  "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 .anyRequest().authenticated())
-            .oauth2ResourceServer(o -> o.jwt(Customizer.withDefaults()));
+            .exceptionHandling(e -> e
+                .authenticationEntryPoint(handlers)
+                .accessDeniedHandler(handlers))
+            .oauth2ResourceServer(o -> o
+                .jwt(Customizer.withDefaults())
+                .authenticationEntryPoint(handlers)
+                .accessDeniedHandler(handlers));
         return http.build();
     }
 
