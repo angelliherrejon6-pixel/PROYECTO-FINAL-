@@ -6,6 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.net.URI;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -28,9 +34,16 @@ public class MedioController {
         return medioRepository.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Crear un medio", description = "Devuelve 201 con la cabecera Location del nuevo medio.")
+    @ApiResponse(responseCode = "201", description = "Medio creado")
     @PostMapping
-    public Medio crear(@RequestBody Medio medio) { return medioRepository.save(medio); }
-
+    public ResponseEntity<Medio> crear(@RequestBody Medio medio) {
+        medio.setId(null); // evita que un POST con id sobrescriba un medio existente
+        Medio guardado = medioRepository.save(medio);
+        URI ubicacion = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(guardado.getId()).toUri();
+        return ResponseEntity.created(ubicacion).body(guardado);
+    }
     @PutMapping("/{id}")
     public ResponseEntity<Medio> actualizar(@PathVariable Long id, @RequestBody Medio datos) {
         return medioRepository.findById(id).map(medio -> {

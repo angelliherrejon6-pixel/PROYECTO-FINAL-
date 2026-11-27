@@ -1,0 +1,22 @@
+services:
+  app:
+    image: mcr.microsoft.com/devcontainers/java:3-25-trixie
+    volumes:
+      - ..:/workspaces/PROYECTO-FINAL-:cached
+    command: sleep infinity
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: musica
+      POSTGRES_PASSWORD: musica
+      POSTGRES_DB: musica
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+  

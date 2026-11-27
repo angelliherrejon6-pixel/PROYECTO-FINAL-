@@ -1,6 +1,8 @@
 {
   "name": "Java",
-  "image": "mcr.microsoft.com/devcontainers/java:3-25-trixie",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/PROYECTO-FINAL-",
   "features": {
     "ghcr.io/devcontainers/features/java:1": {
       "version": "none",

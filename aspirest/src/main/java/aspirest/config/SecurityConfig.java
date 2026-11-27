@@ -29,6 +29,24 @@ public class SecurityConfig {
     private String secret;
 
     @Bean
+main
+    SecurityFilterChain filterChain(HttpSecurity http, RestSecurityHandlers handlers) throws Exception {
+        http.csrf(csrf -> csrf.disable())
+            .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(a -> a
+                .requestMatchers("/error",
+                                 "/api/auth/**", "/hello",
+                                 "/actuator/health", "/actuator/health/**",
+                                 "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                .anyRequest().authenticated())
+            .exceptionHandling(e -> e
+                .authenticationEntryPoint(handlers)
+                .accessDeniedHandler(handlers))
+            .oauth2ResourceServer(o -> o
+                .jwt(Customizer.withDefaults())
+                .authenticationEntryPoint(handlers)
+                .accessDeniedHandler(handlers));
+
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
             .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -38,6 +56,7 @@ public class SecurityConfig {
                                  "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 .anyRequest().authenticated())
             .oauth2ResourceServer(o -> o.jwt(Customizer.withDefaults()));
+ main
         return http.build();
     }
 
